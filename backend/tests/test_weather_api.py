@@ -34,12 +34,19 @@ def test_get_weather_success():
             "time": ["2023-10-27"],
             "precipitation_sum": [5.0],
             "et0_fao_evapotranspiration": [3.5],
-            "shortwave_radiation_sum": [15.0]
+            "shortwave_radiation_sum": [15.0],
+            "weathercode": [1],
+            "weather_description": ["Mainly Clear"]
         },
         "hourly": {
             "time": ["2023-10-27T00:00"],
             "soil_moisture_0_to_1cm": [0.3],
-            "soil_moisture_27_to_81cm": [0.4]
+            "soil_moisture_27_to_81cm": [0.4],
+            "temperature_2m": [20.0],
+            "relativehumidity_2m": [60.0],
+            "windspeed_10m": [10.0],
+            "weathercode": [1],
+            "weather_description": ["Mainly Clear"]
         }
     }
 
@@ -58,6 +65,7 @@ def test_get_weather_success():
         assert data["weather"] == mock_weather_data["current_weather"]
         assert data["daily"]["precipitation_sum"] == [5.0]
         assert data["hourly"]["soil_moisture_0_to_1cm"] == [0.3]
+        assert data["hourly"]["temperature_2m"] == [20.0]
 
 def test_get_weather_city_not_found():
     with patch("routers.weather.OpenMeteoService.get_coordinates", new_callable=AsyncMock) as mock_get_coords:
